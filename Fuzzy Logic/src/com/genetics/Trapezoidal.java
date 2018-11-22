@@ -2,7 +2,7 @@ package com.genetics;
 
 public class Trapezoidal extends Shape{
 
-    public Trapezoidal(String name,int[] points){
+    public Trapezoidal(String name,float[] points){
         this.name=name;
         this.points=new Point[4];
         for(int i=0;i<points.length;i++){
