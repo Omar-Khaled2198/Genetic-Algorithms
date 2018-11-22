@@ -3,8 +3,21 @@ package com.genetics;
 public class Shape {
 
     public String name;
-    Point[] points;
+    public Point[] points;
 
+    public Shape(String name,String type,float[] points){
+        this.name=name;
+        if(type.equals("triangle"))
+            this.points=new Point[3];
+        else
+            this.points=new Point[4];
+        for(int i=0;i<points.length;i++){
+            if(i==0||i==points.length-1)
+                this.points[i]=new Point(points[i],0);
+            else
+                this.points[i]=new Point(points[i],1);
+        }
+    }
 
     public float fuzzification(float value){
         for(int i=0;i<points.length-1;i++){
@@ -17,5 +30,17 @@ public class Shape {
             }
         }
         return Float.MIN_VALUE;
+    }
+
+    public float calculateCentroid(){
+
+        float centroidX = 0, centroidY = 0;
+        for(Point knot : points) {
+            centroidX += knot.x;
+            centroidY += knot.y;
+        }
+//        System.out.println(centroidX/(float)points.length+" "+centroidY/(float)points.length);
+        return centroidX/(float)points.length;
+
     }
 }

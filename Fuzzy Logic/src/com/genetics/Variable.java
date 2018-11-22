@@ -8,8 +8,8 @@ public class Variable {
 
     private String name;
     private float value;
-    private ArrayList<Shape>shapes;
-    private Map<String,Float> terms;
+    public ArrayList<Shape>shapes;
+    public Map<String,Float> terms;
 
     public Variable(String name){
         this.name=name;
@@ -26,20 +26,19 @@ public class Variable {
     }
 
     public void addShape(String name,String type,float[] points){
-        Shape shape=null;
-        if(type.equals("triangle"))
-            shape=new Triangular(name,points);
-        else
-            shape=new Trapezoidal(name,points);
+        Shape shape=new Shape(name,type,points);
         if(this.value!=-1){
             float y=shape.fuzzification(this.value);
-//            System.out.println(name+" "+y);
             terms.put(name,y);
         }
-        else
-            terms.put(name,Float.MIN_VALUE);
-
         shapes.add(shape);
+    }
+
+    public Shape getShape(String name){
+        for(int i=0;i<shapes.size();i++)
+            if(shapes.get(i).name.equals(name))
+                return shapes.get(i);
+        return null;
     }
 
     public String getName() {
@@ -53,4 +52,6 @@ public class Variable {
     public void setValue(String name,float value){
         this.terms.put(name,value);
     }
+
+
 }
