@@ -19,27 +19,41 @@ public class Solver{
     public void inferenceRule(Rule rule){
         float var1,var2;
         var1=var2=0;
-        for(int i=0;i<variables.size();i++){
-
-            if(variables.get(i).getName().equals(rule.variable1)){
-                var1=variables.get(i).getValue(rule.term1);
+        ArrayList<Float>results=new ArrayList<>();
+        ArrayList<String>operations=new ArrayList<>();
+        while(rule.inputVariables.size()>0){
+            for(int x=0;x<variables.size();x++){
+                if(variables.get(x).getName().equals(rule.inputVariables.get(0))){
+                    var1=variables.get(x).getValue(rule.inputTerms.get(0));
+                }
+                if(variables.get(x).getName().equals(rule.inputVariables.get(1))){
+                    var2=variables.get(x).getValue(rule.inputTerms.get(1));
+                }
             }
-            if(variables.get(i).getName().equals(rule.variable2))
-                var2=variables.get(i).getValue(rule.term2);
+            results.add(var1);
+            results.add(var2);
+            operations.add(rule.operations.get(0));
+            rule.operations.remove(0);
+            rule.inputVariables.remove(0);
+            rule.inputVariables.remove(0);
+            rule.inputTerms.remove(0);
+            rule.inputTerms.remove(0);
+
         }
-
-        if(rule.operation.equals("AND")){
-            float inf=Float.min(var1,var2);
-            if(inf!=Float.MIN_VALUE){
-//                System.out.println(inf+" "+rule.outputTerm);
-                outputVariable.setValue(rule.outputTerm,inf);
+        while (operations.size()>0){
+            float temp;
+            if(operations.get(0).equals("AND")){
+                temp=Float.min(results.get(0),results.get(1));
+            }else{
+                temp=Float.max(results.get(0),results.get(1));
             }
-        }else{
-            float inf=Float.max(var1,var2);
-            if(inf!=Float.MIN_VALUE) {
-//                System.out.println(inf+" "+rule.outputTerm);
-                outputVariable.setValue(rule.outputTerm, inf);
-            }
+            operations.remove(0);
+            results.remove(0);
+            results.set(0,temp);
+        }
+        if(results.get(0)!=Float.MIN_VALUE){
+            System.out.println(results.get(0)+" "+rule.outputTerm);
+            outputVariable.setValue(rule.outputTerm,results.get(0));
         }
     }
 
@@ -48,7 +62,6 @@ public class Solver{
         float sum1=0;
         float sum2=0;
         for(String term:outputVariable.terms.keySet()){
-            System.out.println(term);
             sum1+=outputVariable.terms.get(term);
             sum2+=outputVariable.terms.get(term)*outputVariable.getShape(term).calculateCentroid();;
         }

@@ -1,24 +1,44 @@
 package com.genetics;
 
+import java.util.ArrayList;
+
 public class Rule {
 
-    public String variable1;
-    public String term1;
-    public String variable2;
-    public String term2;
-    public String operation;
-    public String output;
+    public ArrayList<String>inputVariables;
+    public ArrayList<String>inputTerms;
+    public ArrayList<String>operations;
+    public String outputVariable;
     public String outputTerm;
 
 
     public Rule(String rule){
-        String[] splitArray = rule.split("\\s+");
-        this.variable1=splitArray[0];
-        this.term1=splitArray[2];
-        this.variable2=splitArray[4];
-        this.term2=splitArray[6];
-        this.operation=splitArray[3];
-        this.output=splitArray[8];
-        this.outputTerm=splitArray[10];
+        inputVariables=new ArrayList<>();
+        inputTerms=new ArrayList<>();
+        operations=new ArrayList<>();
+        String[] split = rule.split("\\s+");
+        boolean equal=false,then=false;
+        for(int i=0;i<split.length-1;i++){
+            if(split[i].equals("then"))
+                then=true;
+            if(split[i+1].equals("=")&&!then){
+                inputVariables.add(split[i]);
+                equal=true;
+            }
+            else if(!split[i].equals("=")&&equal&&!then){
+                inputTerms.add(split[i]);
+                equal=false;
+            }
+            else if(!split[i+1].equals("=")&&!equal&&!then){
+                operations.add(split[i]);
+            }
+            else if(split[i+1].equals("=")&&then){
+                outputVariable=split[i];
+                equal=true;
+            }
+            else if(split[i].equals("=")&&equal&&then){
+                outputTerm=split[i+1];
+            }
+        }
     }
+
 }

@@ -6,6 +6,19 @@ public class Main {
 
     public static void main(String[] args) {
 
+//        Rule rule1=new Rule("var1 = Left AND var2 = A OR var3 = B then outputVar = X");
+//        for(int i=0;i<rule1.variables.size();i++)
+//            System.out.print(rule1.variables.get(i)+" ");
+//        System.out.println();
+//        for(int i=0;i<rule1.terms.size();i++)
+//            System.out.print(rule1.terms.get(i)+" ");
+//        System.out.println();
+//        for(int i=0;i<rule1.operations.size();i++)
+//            System.out.print(rule1.operations.get(i)+" ");
+//        System.out.println();
+//        System.out.println(rule1.outputVariable+" "+rule1.outputTerm);
+
+
         Variable variable1=new Variable("OP",30);
         variable1.addShape("Low","triangle",new float[]{0,0,50});
         variable1.addShape("Medium","triangle",new float[]{0,50,100});
