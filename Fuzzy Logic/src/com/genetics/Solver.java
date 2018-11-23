@@ -16,6 +16,7 @@ public class Solver{
         this.variables.add(variable);
     }
 
+    //substitute variables with values already calcualted before in fuzzifiaction then apply rules AND OR (MIN / MAX)
     public void inferenceRule(Rule rule){
         float var1,var2;
         var1=var2=0;
@@ -24,12 +25,13 @@ public class Solver{
         while(rule.inputVariables.size()>0){
             for(int x=0;x<variables.size();x++){
                 if(variables.get(x).getName().equals(rule.inputVariables.get(0))){
-                    var1=variables.get(x).getValue(rule.inputTerms.get(0));
+                    var1=variables.get(x).getTermValue(rule.inputTerms.get(0));
                 }
                 if(variables.get(x).getName().equals(rule.inputVariables.get(1))){
-                    var2=variables.get(x).getValue(rule.inputTerms.get(1));
+                    var2=variables.get(x).getTermValue(rule.inputTerms.get(1));
                 }
             }
+
             results.add(var1);
             results.add(var2);
             operations.add(rule.operations.get(0));
@@ -53,7 +55,7 @@ public class Solver{
         }
         if(results.get(0)!=Float.MIN_VALUE){
             System.out.println(results.get(0)+" "+rule.outputTerm);
-            outputVariable.setValue(rule.outputTerm,results.get(0));
+            outputVariable.setTermValue(rule.outputTerm,results.get(0));
         }
     }
 
@@ -62,9 +64,13 @@ public class Solver{
         float sum1=0;
         float sum2=0;
         for(String term:outputVariable.terms.keySet()){
+            System.out.print(outputVariable.terms.get(term)+"*"+term+" + ");
             sum1+=outputVariable.terms.get(term);
             sum2+=outputVariable.terms.get(term)*outputVariable.getShape(term).calculateCentroid();;
         }
+        System.out.println("\n____________________________________________________");
+        System.out.println("\t\t\t\t"+sum1);
+        System.out.println("=");
         System.out.println(sum2/sum1);
     }
 }

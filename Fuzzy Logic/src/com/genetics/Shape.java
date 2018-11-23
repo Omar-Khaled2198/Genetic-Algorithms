@@ -37,7 +37,7 @@ public class Shape {
         float centroidX = 0, centroidY = 0;
         for(Point knot : points) {
             centroidX += knot.x;
-            centroidY += knot.y;
+//            centroidY += knot.y;
         }
 //        System.out.println(centroidX/(float)points.length+" "+centroidY/(float)points.length);
         return centroidX/(float)points.length;

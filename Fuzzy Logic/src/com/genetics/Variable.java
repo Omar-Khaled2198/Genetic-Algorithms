@@ -27,10 +27,14 @@ public class Variable {
 
     public void addShape(String name,String type,float[] points){
         Shape shape=new Shape(name,type,points);
+        //as there are two types of variables input and output
+        //value = -1 mean this variable is output variable not input so i won't call fuzzification
         if(this.value!=-1){
             float y=shape.fuzzification(this.value);
+            System.out.println(name+"("+this.value+") = "+y);
             terms.put(name,y);
         }
+
         shapes.add(shape);
     }
 
@@ -45,11 +49,11 @@ public class Variable {
         return name;
     }
 
-    public float getValue(String name){
+    public float getTermValue(String name){
         return terms.get(name);
     }
 
-    public void setValue(String name,float value){
+    public void setTermValue(String name,float value){
         this.terms.put(name,value);
     }
 
