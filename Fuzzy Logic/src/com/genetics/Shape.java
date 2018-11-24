@@ -19,13 +19,16 @@ public class Shape {
         }
     }
 
+    //get intersection point between vertical line and other line (Low,Medium,High..eg)
+    //if y >1 or y<0 this mean that vertical line doesn't intersect with lines (Low,Medium,...eg)
+
     public float fuzzification(float value){
         for(int i=0;i<points.length-1;i++){
             if(points[i].x!=points[i+1].x) {
                 float slope = (points[i + 1].y - points[i].y) / (points[i + 1].x - points[i].x);
                 float b = points[i].y - (slope * points[i].x);
                 float y = slope * value + b;
-                if (y <= 1 && y > 0)
+                if (y <= 1 && y > 0 && Float.compare(value,points[0].x)>=0&&Float.compare(value,points[points.length-1].x)<=0)
                     return y;
             }
         }

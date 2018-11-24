@@ -53,8 +53,9 @@ public class Solver{
             results.remove(0);
             results.set(0,temp);
         }
+        System.out.println(results.get(0)+" "+rule.outputTerm);
         if(results.get(0)!=Float.MIN_VALUE){
-            System.out.println(results.get(0)+" "+rule.outputTerm);
+
             outputVariable.setTermValue(rule.outputTerm,results.get(0));
         }
     }
